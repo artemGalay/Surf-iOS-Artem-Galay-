@@ -11,6 +11,8 @@
 		D9BA6041298CEAD5001041F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA6040298CEAD5001041F3 /* ViewController.swift */; };
 		D9BA6046298CEAD6001041F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9BA6045298CEAD6001041F3 /* Assets.xcassets */; };
 		D9BA6049298CEAD6001041F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9BA6047298CEAD6001041F3 /* LaunchScreen.storyboard */; };
+		D9BA6057298CF2AE001041F3 /* CommonColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA6056298CF2AE001041F3 /* CommonColor.swift */; };
+		D9BA605B298CF2DA001041F3 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA605A298CF2DA001041F3 /* UIColor+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		D9BA6045298CEAD6001041F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D9BA6048298CEAD6001041F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D9BA604A298CEAD6001041F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9BA6056298CF2AE001041F3 /* CommonColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonColor.swift; sourceTree = "<group>"; };
+		D9BA605A298CF2DA001041F3 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,13 +56,71 @@
 		D9BA603B298CEAD5001041F3 /* Surf-iOS(Artem-Galay) */ = {
 			isa = PBXGroup;
 			children = (
-				D9BA603C298CEAD5001041F3 /* AppDelegate.swift */,
-				D9BA6040298CEAD5001041F3 /* ViewController.swift */,
-				D9BA6045298CEAD6001041F3 /* Assets.xcassets */,
-				D9BA6047298CEAD6001041F3 /* LaunchScreen.storyboard */,
-				D9BA604A298CEAD6001041F3 /* Info.plist */,
+				D9BA6054298CF276001041F3 /* Common */,
+				D9BA6050298CF185001041F3 /* App */,
+				D9BA6053298CF243001041F3 /* Sources */,
+				D9BA6052298CF22F001041F3 /* Resources */,
 			);
 			path = "Surf-iOS(Artem-Galay)";
+			sourceTree = "<group>";
+		};
+		D9BA6050298CF185001041F3 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D9BA6051298CF18A001041F3 /* Settings */,
+				D9BA603C298CEAD5001041F3 /* AppDelegate.swift */,
+				D9BA6047298CEAD6001041F3 /* LaunchScreen.storyboard */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D9BA6051298CF18A001041F3 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D9BA604A298CEAD6001041F3 /* Info.plist */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D9BA6052298CF22F001041F3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D9BA6045298CEAD6001041F3 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D9BA6053298CF243001041F3 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D9BA6040298CEAD5001041F3 /* ViewController.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		D9BA6054298CF276001041F3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D9BA6055298CF293001041F3 /* Untils */,
+				D9BA6058298CF2BA001041F3 /* Extensions */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		D9BA6055298CF293001041F3 /* Untils */ = {
+			isa = PBXGroup;
+			children = (
+				D9BA6056298CF2AE001041F3 /* CommonColor.swift */,
+			);
+			path = Untils;
+			sourceTree = "<group>";
+		};
+		D9BA6058298CF2BA001041F3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D9BA605A298CF2DA001041F3 /* UIColor+Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -132,6 +194,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9BA6041298CEAD5001041F3 /* ViewController.swift in Sources */,
+				D9BA605B298CF2DA001041F3 /* UIColor+Ext.swift in Sources */,
+				D9BA6057298CF2AE001041F3 /* CommonColor.swift in Sources */,
 				D9BA603D298CEAD5001041F3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,7 +337,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76N9URDUCT;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/Info.plist";
+				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/App/Settings/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -301,7 +365,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76N9URDUCT;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/Info.plist";
+				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/App/Settings/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
