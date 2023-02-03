@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D9BA603D298CEAD5001041F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA603C298CEAD5001041F3 /* AppDelegate.swift */; };
-		D9BA603F298CEAD5001041F3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA603E298CEAD5001041F3 /* SceneDelegate.swift */; };
 		D9BA6041298CEAD5001041F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA6040298CEAD5001041F3 /* ViewController.swift */; };
-		D9BA6044298CEAD5001041F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9BA6042298CEAD5001041F3 /* Main.storyboard */; };
 		D9BA6046298CEAD6001041F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9BA6045298CEAD6001041F3 /* Assets.xcassets */; };
 		D9BA6049298CEAD6001041F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9BA6047298CEAD6001041F3 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -18,9 +16,7 @@
 /* Begin PBXFileReference section */
 		D9BA6039298CEAD5001041F3 /* Surf-iOS(Artem-Galay).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Surf-iOS(Artem-Galay).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9BA603C298CEAD5001041F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D9BA603E298CEAD5001041F3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D9BA6040298CEAD5001041F3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D9BA6043298CEAD5001041F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D9BA6045298CEAD6001041F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D9BA6048298CEAD6001041F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D9BA604A298CEAD6001041F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,9 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				D9BA603C298CEAD5001041F3 /* AppDelegate.swift */,
-				D9BA603E298CEAD5001041F3 /* SceneDelegate.swift */,
 				D9BA6040298CEAD5001041F3 /* ViewController.swift */,
-				D9BA6042298CEAD5001041F3 /* Main.storyboard */,
 				D9BA6045298CEAD6001041F3 /* Assets.xcassets */,
 				D9BA6047298CEAD6001041F3 /* LaunchScreen.storyboard */,
 				D9BA604A298CEAD6001041F3 /* Info.plist */,
@@ -127,7 +121,6 @@
 			files = (
 				D9BA6049298CEAD6001041F3 /* LaunchScreen.storyboard in Resources */,
 				D9BA6046298CEAD6001041F3 /* Assets.xcassets in Resources */,
-				D9BA6044298CEAD5001041F3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,21 +133,12 @@
 			files = (
 				D9BA6041298CEAD5001041F3 /* ViewController.swift in Sources */,
 				D9BA603D298CEAD5001041F3 /* AppDelegate.swift in Sources */,
-				D9BA603F298CEAD5001041F3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D9BA6042298CEAD5001041F3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D9BA6043298CEAD5001041F3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D9BA6047298CEAD6001041F3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -292,7 +276,7 @@
 				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -320,7 +304,7 @@
 				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
