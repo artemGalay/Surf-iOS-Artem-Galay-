@@ -9,8 +9,15 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private let customView = View()
+
+    override func loadView() {
+        super.loadView()
+        view = customView
+        view.addBackground()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = CommonColor.lightBlack
     }
 }
