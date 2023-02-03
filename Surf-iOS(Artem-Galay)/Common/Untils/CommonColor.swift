@@ -8,8 +8,12 @@
 import UIKit
 
 enum CommonColor {
-    // #DEE3EB
-    static let lightGray = UIColor(hex: "#DEE3EB")
-    // #2F5770
-    static let greenBlue = UIColor(hex: "#2F5770")
+    // #313131
+    static let lightBlack = UIColor(hex: "#313131")
+    // #FFFFFF
+    static let white = UIColor(hex: "#FFFFFF")
+    // #96959B
+    static let gray = UIColor(hex: "#96959B")
+    // #F3F3F5
+    static let lightGray = UIColor(hex: "#F3F3F5")
 }
