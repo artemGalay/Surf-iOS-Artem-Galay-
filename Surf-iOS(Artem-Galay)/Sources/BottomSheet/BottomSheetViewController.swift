@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BottomSheetViewController: UIViewController {
+final class BottomSheetViewController: UIViewController {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -18,6 +18,19 @@ class BottomSheetViewController: UIViewController {
         return label
     }()
 
+//    private lazy var categoriesCollectionView: UICollectionView = {
+//        let layout = TagFlowLayout()
+//        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
+//        collectionView.backgroundColor = .black
+//        collectionView.dataSource = self
+//        collectionView.dragInteractionEnabled = true
+//        collectionView.dropDelegate = self
+//        collectionView.dragDelegate = self
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        return collectionView
+//    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
