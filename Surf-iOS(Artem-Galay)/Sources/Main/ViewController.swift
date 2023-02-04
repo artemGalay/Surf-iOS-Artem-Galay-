@@ -7,13 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+final class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addBackground()
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -21,23 +19,19 @@ class ViewController: UIViewController {
         showBottomPressed()
     }
 
-
-
-    func showBottomPressed() {
+    private func showBottomPressed() {
         let bottomSheet = BottomSheetViewController()
         bottomSheet.isModalInPresentation = true//отменяет сворачивание bottom sheet
-        if let sheet = bottomSheet.sheetPresentationController {
-            let smallId = UISheetPresentationController.Detent.Identifier("small")
-            let smallDetent = UISheetPresentationController.Detent.custom(identifier: smallId) { context in
-                return 240
-            }
-            sheet.detents = [smallDetent, .medium(), .large()]
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.prefersGrabberVisible = true
-            sheet.largestUndimmedDetentIdentifier = .medium
-            sheet.preferredCornerRadius = 20
-            sheet.prefersEdgeAttachedInCompactHeight = true
-        }
-        self.present(bottomSheet, animated: true)
+
+        guard let sheet = bottomSheet.sheetPresentationController else { return }
+        let smallId = UISheetPresentationController.Detent.Identifier("small")
+        let small = UISheetPresentationController.Detent.custom(identifier: smallId) { context in 240 }
+        sheet.detents = [small, .medium(), .large()]
+        sheet.prefersScrollingExpandsWhenScrolledToEdge = false//приоретет на скролл
+//        sheet.prefersGrabberVisible = true//граббер
+//        sheet.largestUndimmedDetentIdentifier = .medium
+        sheet.preferredCornerRadius = 20
+        sheet.prefersEdgeAttachedInCompactHeight = true//работа в портретном режиме
+        present(bottomSheet, animated: true)
     }
 }
