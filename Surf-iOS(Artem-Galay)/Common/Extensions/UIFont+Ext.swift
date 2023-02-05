@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIFont {
-    static func sfProDisplayBold() -> UIFont {
+    static func sfProDisplayBold24() -> UIFont {
         UIFont(name: "SFProDisplay-Bold", size: 24) ?? UIFont.systemFont(ofSize: 24)
     }
 
@@ -20,7 +20,7 @@ extension UIFont {
         UIFont(name: "SFProDisplay-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14)
     }
 
-    static func sfProDisplayRegular() -> UIFont {
+    static func sfProDisplayRegular14() -> UIFont {
         UIFont(name: "SFProDisplay-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14)
     }
 }
