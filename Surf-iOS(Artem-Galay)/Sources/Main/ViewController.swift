@@ -16,22 +16,14 @@ final class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        showBottomPressed()
+        presentModalController()
     }
 
-    private func showBottomPressed() {
-        let bottomSheet = BottomSheetViewController()
-        bottomSheet.isModalInPresentation = true//отменяет сворачивание bottom sheet
-
-        guard let sheet = bottomSheet.sheetPresentationController else { return }
-        let smallId = UISheetPresentationController.Detent.Identifier("small")
-        let small = UISheetPresentationController.Detent.custom(identifier: smallId) { context in 240 }
-        sheet.detents = [small, .medium(), .large()]
-        sheet.prefersScrollingExpandsWhenScrolledToEdge = false//приоретет на скролл
-//        sheet.prefersGrabberVisible = true//граббер
-//        sheet.largestUndimmedDetentIdentifier = .medium
-        sheet.preferredCornerRadius = 20
-        sheet.prefersEdgeAttachedInCompactHeight = true//работа в портретном режиме
-        present(bottomSheet, animated: true)
+    private func presentModalController() {
+        let vc = CustomModalViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        // Keep animated value as false
+        // Custom Modal presentation animation will be handled in VC itself
+        self.present(vc, animated: true)
     }
 }
