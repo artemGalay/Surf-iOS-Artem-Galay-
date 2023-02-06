@@ -9,37 +9,46 @@ import UIKit
 
 final class CustomModalViewController: UIViewController {
 
+    private var categories = Categories.names
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Стажировка в Surf"
         label.textColor = CommonColor.lightBlack
-        label.font = UIFont.sfProDisplayBold24()
+        label.font = UIFont.sfProDisplayBold(size: 24)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты."
-        label.textColor = CommonColor.gray
-        label.numberOfLines = 3
-        label.font = UIFont.sfProDisplayRegular14()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private let descriptionLabel = DescriptionLabel(text: "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты.",
+                                                    numberOfLines: 3)
+
 
     // define lazy views
 
-    lazy var contentStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
-        stackView.axis = .vertical
-        stackView.spacing = 12.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
+
+    lazy var categoriesCollectionView: UICollectionView = {
+//        let layout = TagFlowLayout()
+//        layout.estimatedItemSize = TagFlowLayout.automaticSize
+        let layout = UICollectionViewFlowLayout()
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
     }()
 
+    private let joinUsLabel = DescriptionLabel(text: "Хочешь к нам?", numberOfLines: 1)
+    private let description2Label = DescriptionLabel(text: "Получай стипендию, выстраивай удобный график, работай на современном железе.",
+                                                     numberOfLines: 2)
+
     private lazy var sendRequestButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Отправить заявку", for: .normal)
         button.backgroundColor = CommonColor.lightBlack
         button.setTitleColor(CommonColor.white, for: .normal)
@@ -51,14 +60,14 @@ final class CustomModalViewController: UIViewController {
     lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 20
+        view.layer.cornerRadius = 25
 //        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    let defaultHeight: CGFloat = 276
+    let defaultHeight: CGFloat = 330
     let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 50
     // keep updated with new height
     var currentContainerHeight: CGFloat = UIScreen.main.bounds.height * 0.5
@@ -74,17 +83,20 @@ final class CustomModalViewController: UIViewController {
         setupPanGesture()
     }
 
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        animatePresentContainer()
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animatePresentContainer()
+    }
 
     func setupView() {
         view.backgroundColor = .clear
         view.addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(descriptionLabel)
+        containerView.addSubview(joinUsLabel)
         containerView.addSubview(sendRequestButton)
+        containerView.addSubview(categoriesCollectionView)
+        containerView.addSubview(description2Label)
     }
 
     func setupConstraints() {
@@ -93,7 +105,6 @@ final class CustomModalViewController: UIViewController {
             // set container static constraint (trailing & leading & bottom)
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             // content stackView
 //            contentStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
 //            contentStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
@@ -107,10 +118,23 @@ final class CustomModalViewController: UIViewController {
             descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
 
-            sendRequestButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -58),
+            categoriesCollectionView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
+            categoriesCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
+            categoriesCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            categoriesCollectionView.heightAnchor.constraint(equalToConstant: 50),
+
+            description2Label.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 24),
+            description2Label.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            description2Label.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+
+
+            joinUsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            joinUsLabel.centerYAnchor.constraint(equalTo: sendRequestButton.centerYAnchor),
+
             sendRequestButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             sendRequestButton.heightAnchor.constraint(equalToConstant: 60),
-            sendRequestButton.widthAnchor.constraint(equalToConstant: 219)
+            sendRequestButton.widthAnchor.constraint(equalToConstant: 219),
+            sendRequestButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -58)
         ])
 
         // Set dynamic constraints
@@ -130,10 +154,8 @@ final class CustomModalViewController: UIViewController {
 
 
     @objc func handlePanGesture(gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: view)
-        // drag to top will be minus value and vice versa
-        print("Pan gesture y offset: \(translation.y)")
 
+        let translation = gesture.translation(in: view)
         // get drag direction
         let isDraggingDown = translation.y > 0
         print("Dragging direction: \(isDraggingDown ? "going down" : "going up")")
@@ -153,17 +175,21 @@ final class CustomModalViewController: UIViewController {
             }
         case .ended:
 
-            if newHeight < defaultHeight {
-                // Condition 2: If new height is below default, animate back to default
-                animateContainerHeight(defaultHeight)
-            }
-            else if newHeight < maximumContainerHeight && isDraggingDown {
+//            if newHeight < defaultHeight {
+//                // Condition 2: If new height is below default, animate back to default
+//                animateContainerHeight(defaultHeight)
+//            }
+//            else
+            if newHeight < maximumContainerHeight && isDraggingDown {
                 // Condition 3: If new height is below max and going down, set to default height
                 animateContainerHeight(defaultHeight)
+
             }
             else if newHeight > defaultHeight && !isDraggingDown {
                 // Condition 4: If new height is below max and going up, set to max height at top
                 animateContainerHeight(maximumContainerHeight)
+
+                description2Label.isHidden = false
             }
 
         default:
@@ -182,21 +208,77 @@ final class CustomModalViewController: UIViewController {
 
     func animateContainerHeight(_ height: CGFloat) {
         UIView.animate(withDuration: 0.4) {
+
             // Update container height
             self.containerViewHeightConstraint?.constant = height
             // Call this to trigger refresh constraint
             self.view.layoutIfNeeded()
         }
         // Save current height
-//        currentContainerHeight = height
+        currentContainerHeight = height
+
+        description2Label.isHidden = true
     }
 
-//    func animatePresentContainer() {
-//        // Update bottom constraint in animation block
-//        UIView.animate(withDuration: 0.3) {
-//            self.containerViewBottomConstraint?.constant = 0
-//            // Call this to trigger refresh constraint
-//            self.view.layoutIfNeeded()
+    func animatePresentContainer() {
+        // Update bottom constraint in animation block
+        UIView.animate(withDuration: 0.3) {
+            self.containerViewBottomConstraint?.constant = 0
+            // Call this to trigger refresh constraint
+            self.view.layoutIfNeeded()
+        }
+        description2Label.isHidden = true
+
+    }
+}
+
+extension CustomModalViewController: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        categories.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionViewCell.identifier, for: indexPath) as? CategoriesCollectionViewCell else { return UICollectionViewCell() }
+        cell.layer.backgroundColor = CommonColor.lightGray.cgColor
+        cell.layer.cornerRadius = 12
+        cell.categoriesLabel.text = categories[indexPath.row]
+
+        return cell
+    }
+}
+
+
+extension CustomModalViewController: UICollectionViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffsetX = scrollView.contentOffset.x
+        let frameWidth = categoriesCollectionView.frame.width
+        let sectionLength = categoriesCollectionView.contentSize.width / CGFloat(numberOfSections(in: categoriesCollectionView))
+        let contentLength = categoriesCollectionView.contentSize.width
+        if contentOffsetX <= 0 {
+            categoriesCollectionView.contentOffset.x = sectionLength - contentOffsetX
+
+        } else if contentOffsetX >= contentLength - frameWidth {
+            categoriesCollectionView.contentOffset.x = contentLength - sectionLength - frameWidth
+        }
+    }
+
+//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//        cancelTimer()
+//    }
+
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0) {
+//            direction = .right
+//        } else {
+//            direction = .left
 //        }
+////        startTimer()
 //    }
 }
