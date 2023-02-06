@@ -24,6 +24,6 @@ final class ViewController: UIViewController {
         vc.modalPresentationStyle = .overCurrentContext
         // Keep animated value as false
         // Custom Modal presentation animation will be handled in VC itself
-        self.present(vc, animated: true)
+        self.present(vc, animated: false)
     }
 }
