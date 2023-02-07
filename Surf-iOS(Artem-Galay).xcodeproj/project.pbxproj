@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D92670CA29927C42002E698B /* SFProDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D92670C929927C42002E698B /* SFProDisplay-Bold.ttf */; };
+		D92670CC29927C9A002E698B /* SFProDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D92670CB29927C9A002E698B /* SFProDisplay-Medium.ttf */; };
+		D92670CE29927CA3002E698B /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D92670CD29927CA3002E698B /* SFProDisplay-Regular.ttf */; };
 		D98A284C298D2385006D6760 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A284B298D2385006D6760 /* CustomModalViewController.swift */; };
 		D98A2854299046C0006D6760 /* CategoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A2853299046C0006D6760 /* CategoriesCollectionViewCell.swift */; };
 		D98A285829904C29006D6760 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A285729904C29006D6760 /* Categories.swift */; };
@@ -19,13 +22,13 @@
 		D9BA6057298CF2AE001041F3 /* CommonColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA6056298CF2AE001041F3 /* CommonColor.swift */; };
 		D9BA605B298CF2DA001041F3 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA605A298CF2DA001041F3 /* UIColor+Ext.swift */; };
 		D9BA605D298CF679001041F3 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA605C298CF679001041F3 /* UIFont+Ext.swift */; };
-		D9BA6060298CF7E9001041F3 /* SFProDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9BA605F298CF7E9001041F3 /* SFProDisplay-Bold.ttf */; };
-		D9BA6062298CF984001041F3 /* SFProDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9BA6061298CF984001041F3 /* SFProDisplay-Medium.ttf */; };
-		D9BA6064298CF9D8001041F3 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9BA6063298CF9D8001041F3 /* SFProDisplay-Regular.ttf */; };
 		D9BA6066298D0057001041F3 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA6065298D0057001041F3 /* UIView+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D92670C929927C42002E698B /* SFProDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Bold.ttf"; sourceTree = "<group>"; };
+		D92670CB29927C9A002E698B /* SFProDisplay-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Medium.ttf"; sourceTree = "<group>"; };
+		D92670CD29927CA3002E698B /* SFProDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Regular.ttf"; sourceTree = "<group>"; };
 		D98A284B298D2385006D6760 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
 		D98A2853299046C0006D6760 /* CategoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		D98A285729904C29006D6760 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
@@ -40,9 +43,6 @@
 		D9BA6056298CF2AE001041F3 /* CommonColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonColor.swift; sourceTree = "<group>"; };
 		D9BA605A298CF2DA001041F3 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		D9BA605C298CF679001041F3 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
-		D9BA605F298CF7E9001041F3 /* SFProDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Bold.ttf"; sourceTree = "<group>"; };
-		D9BA6061298CF984001041F3 /* SFProDisplay-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Medium.ttf"; sourceTree = "<group>"; };
-		D9BA6063298CF9D8001041F3 /* SFProDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Regular.ttf"; sourceTree = "<group>"; };
 		D9BA6065298D0057001041F3 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -194,9 +194,9 @@
 		D9BA605E298CF768001041F3 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				D9BA605F298CF7E9001041F3 /* SFProDisplay-Bold.ttf */,
-				D9BA6061298CF984001041F3 /* SFProDisplay-Medium.ttf */,
-				D9BA6063298CF9D8001041F3 /* SFProDisplay-Regular.ttf */,
+				D92670C929927C42002E698B /* SFProDisplay-Bold.ttf */,
+				D92670CB29927C9A002E698B /* SFProDisplay-Medium.ttf */,
+				D92670CD29927CA3002E698B /* SFProDisplay-Regular.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -267,10 +267,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9BA6060298CF7E9001041F3 /* SFProDisplay-Bold.ttf in Resources */,
-				D9BA6062298CF984001041F3 /* SFProDisplay-Medium.ttf in Resources */,
+				D92670CA29927C42002E698B /* SFProDisplay-Bold.ttf in Resources */,
+				D92670CC29927C9A002E698B /* SFProDisplay-Medium.ttf in Resources */,
 				D9BA6049298CEAD6001041F3 /* LaunchScreen.storyboard in Resources */,
-				D9BA6064298CF9D8001041F3 /* SFProDisplay-Regular.ttf in Resources */,
+				D92670CE29927CA3002E698B /* SFProDisplay-Regular.ttf in Resources */,
 				D9BA6046298CEAD6001041F3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -64,7 +64,7 @@ final class TagsFlowLayout: UICollectionViewFlowLayout {
         guard let attributesForElements = super.layoutAttributesForElements(in: rect) else { return nil }
 
         var newAttributesForElements = [UICollectionViewLayoutAttributes]()
-        var leftMargin: CGFloat = 0
+        var leftMargin: CGFloat = 20
 
         for attributes in attributesForElements {
           let refAttributes = attributes as UICollectionViewLayoutAttributes
@@ -76,10 +76,9 @@ final class TagsFlowLayout: UICollectionViewFlowLayout {
             newLeftAlignedFrame.origin.x = leftMargin
             refAttributes.frame = newLeftAlignedFrame
           }
-          leftMargin += refAttributes.frame.size.width + minimumLineSpacing
+          leftMargin += refAttributes.frame.size.height + minimumLineSpacing
           newAttributesForElements.append(refAttributes)
         }
         return newAttributesForElements
     }
 }
-
