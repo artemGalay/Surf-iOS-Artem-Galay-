@@ -9,6 +9,8 @@ import UIKit
 
 final class CustomModalViewController: UIViewController {
 
+    #warning("Проблема заключается в том, что в первой коллекции при тапе на ячейку, если тап попадает на вторую секцию(их там 2, вторая секция для того, чтобы работал бесконечный скрол вправо и влево) ячейка перемещается, но не выделяется и в логах очень много строк по поводу обновления коллекции")
+
     private var newElement = ""
 
     private var categories = Categories.names
@@ -22,18 +24,9 @@ final class CustomModalViewController: UIViewController {
         return label
     }()
 
-    private let descriptionLabel = DescriptionLabel(text: "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты.",
-                                                    numberOfLines: 3)
+    private lazy var categoriesCollectionView: UICollectionView = {
 
-
-    // define lazy views
-
-
-    lazy var categoriesCollectionView: UICollectionView = {
-        //        let layout = TagFlowLayout()
-        //        layout.estimatedItemSize = TagFlowLayout.automaticSize
         let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: -10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -45,26 +38,18 @@ final class CustomModalViewController: UIViewController {
         return collectionView
     }()
 
-    lazy var categoriesCollectionView2: UICollectionView = {
-        //        let layout = TagFlowLayout()
-        //        layout.estimatedItemSize = TagFlowLayout.automaticSize
+    private lazy var categoriesCollectionView2: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: -10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self
-//                collectionView.delegate = self
-//        collectionView.contentInsetAdjustmentBehavior = .always
+        collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-
-    private let joinUsLabel = DescriptionLabel(text: "Хочешь к нам?", numberOfLines: 1)
-    private let description2Label = DescriptionLabel(text: "Получай стипендию, выстраивай удобный график, работай на современном железе.",
-                                                     numberOfLines: 2)
 
     private lazy var sendRequestButton: UIButton = {
         let button = UIButton(type: .system)
@@ -77,11 +62,17 @@ final class CustomModalViewController: UIViewController {
         return button
     }()
 
-    lazy var containerView: UIView = {
+    private let descriptionLabel = DescriptionLabel(text: "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты.",
+                                                    numberOfLines: 3)
+    private let joinUsLabel = DescriptionLabel(text: "Хочешь к нам?",
+                                               numberOfLines: 1)
+    private let description2Label = DescriptionLabel(text: "Получай стипендию, выстраивай удобный график, работай на современном железе.",
+                                                     numberOfLines: 2)
+
+    private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 25
-        //        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -89,10 +80,8 @@ final class CustomModalViewController: UIViewController {
 
     let defaultHeight: CGFloat = 330
     let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 50
-    // keep updated with new height
     var currentContainerHeight: CGFloat = UIScreen.main.bounds.height * 0.5
 
-    // Dynamic container constraint
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
 
@@ -121,16 +110,9 @@ final class CustomModalViewController: UIViewController {
     }
 
     func setupConstraints() {
-        // Set static constraints
         NSLayoutConstraint.activate([
-            // set container static constraint (trailing & leading & bottom)
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            // content stackView
-            //            contentStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
-            //            contentStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
-            //            contentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            //            contentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
 
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 24),
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
@@ -163,70 +145,47 @@ final class CustomModalViewController: UIViewController {
             sendRequestButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -58)
         ])
 
-        // Set dynamic constraints
-        // First, set container to default height
-        // after panning, the height can expand
         containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: defaultHeight)
-
-        // By setting the height to default height, the container will be hide below the bottom anchor view
-        // Later, will bring it up by set it to 0
-        // set the constant to default height to bring it down again
         containerViewBottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: defaultHeight)
-        // Activate constraints
+
         containerViewHeightConstraint?.isActive = true
         containerViewBottomConstraint?.isActive = true
-
     }
 
 
     @objc func handlePanGesture(gesture: UIPanGestureRecognizer) {
 
         let translation = gesture.translation(in: view)
-        // get drag direction
         let isDraggingDown = translation.y > 0
-
-        // New height is based on value of dragging plus current container height
         let newHeight = currentContainerHeight - translation.y
 
-        // Handle based on gesture state
         switch gesture.state {
         case .changed:
-            // This state will occur when user is dragging
+
             if newHeight > maximumContainerHeight {
-                // Keep updating the height constraint
                 containerViewHeightConstraint?.constant = maximumContainerHeight
-                // refresh layout
                 view.layoutIfNeeded()
             }
         case .ended:
 
-            //            if newHeight < defaultHeight {
-            //                // Condition 2: If new height is below default, animate back to default
-            //                animateContainerHeight(defaultHeight)
-            //            }
-            //            else
             if newHeight < maximumContainerHeight && isDraggingDown {
-                // Condition 3: If new height is below max and going down, set to default height
                 animateContainerHeight(defaultHeight)
 
             }
             else if newHeight > defaultHeight && !isDraggingDown {
-                // Condition 4: If new height is below max and going up, set to max height at top
                 animateContainerHeight(maximumContainerHeight)
-
-                description2Label.isHidden = false
-                categoriesCollectionView2.isHidden = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.description2Label.isHidden = false
+                    self.categoriesCollectionView2.isHidden = false
+                }
             }
-
         default:
             break
         }
     }
 
     func setupPanGesture() {
-        // add pan gesture recognizer to the view controller's view (the whole screen)
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(gesture:)))
-        // change to false to immediately listen on gesture movement
         panGesture.delaysTouchesBegan = false
         panGesture.delaysTouchesEnded = false
         view.addGestureRecognizer(panGesture)
@@ -234,29 +193,23 @@ final class CustomModalViewController: UIViewController {
 
     func animateContainerHeight(_ height: CGFloat) {
         UIView.animate(withDuration: 0.4) {
-
-            // Update container height
             self.containerViewHeightConstraint?.constant = height
-            // Call this to trigger refresh constraint
             self.view.layoutIfNeeded()
         }
-        // Save current height
+
         currentContainerHeight = height
 
-        description2Label.isHidden = true
-        categoriesCollectionView2.isHidden = true
+        self.description2Label.isHidden = true
+        self.categoriesCollectionView2.isHidden = true
     }
 
     func animatePresentContainer() {
-        // Update bottom constraint in animation block
         UIView.animate(withDuration: 0.3) {
             self.containerViewBottomConstraint?.constant = 0
-            // Call this to trigger refresh constraint
             self.view.layoutIfNeeded()
         }
         description2Label.isHidden = true
         categoriesCollectionView2.isHidden = true
-
     }
 }
 
@@ -267,49 +220,60 @@ extension CustomModalViewController: UICollectionViewDataSource {
     }
 
 
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            categories.count
-        }
-
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionViewCell.identifier, for: indexPath) as? CategoriesCollectionViewCell else { return UICollectionViewCell() }
-            cell.layer.cornerRadius = 12
-            cell.categoriesLabel.text = categories[indexPath.row]
-            return cell
-        }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        categories.count
     }
 
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionViewCell.identifier, for: indexPath) as? CategoriesCollectionViewCell else { return UICollectionViewCell() }
+        cell.layer.cornerRadius = 12
+        cell.categoriesLabel.text = categories[indexPath.row]
+        return cell
+    }
+}
 
-    extension CustomModalViewController: UICollectionViewDelegate {
+extension CustomModalViewController: UICollectionViewDelegate {
 
-        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            newElement = categories[indexPath.item]
-            categories.remove(at: indexPath.item)
-            categories.insert(newElement, at: 0)
+#warning("Перемещение ячейки по тапу на первое место")
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        newElement = categories[indexPath.item]
+        categories.remove(at: indexPath.item)
+        categories.insert(newElement, at: 0)
 
-            collectionView.moveItem(at: indexPath, to: IndexPath(item: 0, section: 0))
-            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
-        }
-
-        func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-            if collectionView.cellForItem(at: indexPath)?.isSelected ?? false {
-                collectionView.deselectItem(at: indexPath, animated: true)
-                return false
-            }
-            return true
-        }
-
-//        func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//            let contentOffsetX = scrollView.contentOffset.x
-//            let frameWidth = categoriesCollectionView.frame.width
-//            let sectionLength = categoriesCollectionView.contentSize.width / CGFloat(numberOfSections(in: categoriesCollectionView))
-//            let contentLength = categoriesCollectionView.contentSize.width
-//            if contentOffsetX <= 0 {
-//                categoriesCollectionView.contentOffset.x = sectionLength - contentOffsetX
-//            } else if contentOffsetX >= contentLength - frameWidth {
-//                categoriesCollectionView.contentOffset.x = contentLength - sectionLength - frameWidth
-//            }
-//        }
+        collectionView.moveItem(at: indexPath, to: IndexPath(item: 0, section: 0))
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
     }
 
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        
+        if collectionView.cellForItem(at: indexPath)?.isSelected ?? false {
+            collectionView.deselectItem(at: indexPath, animated: true)
 
+            return false
+        }
+        return true
+    }
+
+#warning("Этот метод отвечает за бесконечный скролл вправо и влево, он работает только если есть 2 секции")
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffsetX = scrollView.contentOffset.x
+        let frameWidth = categoriesCollectionView.frame.width
+        let sectionLength = categoriesCollectionView.contentSize.width / CGFloat(numberOfSections(in: categoriesCollectionView))
+        let contentLength = categoriesCollectionView.contentSize.width
+        if contentOffsetX <= 0 {
+            categoriesCollectionView.contentOffset.x = sectionLength - contentOffsetX
+        } else if contentOffsetX >= contentLength - frameWidth {
+            categoriesCollectionView.contentOffset.x = contentLength - sectionLength - frameWidth
+        }
+    }
+}
+
+extension CustomModalViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let nameFont = UIFont.sfProDisplayMedium(size: 14)
+        let nameAttributes = [NSAttributedString.Key.font : nameFont as Any]
+        let nameWidth = categories[indexPath.item].size(withAttributes: nameAttributes).width + 50
+        return CGSize(width: nameWidth, height: 44)
+    }
+}
