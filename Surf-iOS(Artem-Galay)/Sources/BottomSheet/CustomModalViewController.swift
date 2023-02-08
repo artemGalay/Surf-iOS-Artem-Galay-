@@ -11,8 +11,8 @@ final class CustomModalViewController: UIViewController {
 
     #warning("Проблема заключается в том, что в первой коллекции при тапе на ячейку, если тап попадает на вторую секцию(их там 2, вторая секция для того, чтобы работал бесконечный скрол вправо и влево) ячейка перемещается, но не выделяется и в логах очень много строк по поводу обновления коллекции")
 
+    private var isSelect = false
     private var newElement = ""
-
     private var categories = Categories.names
 
     private let titleLabel: UILabel = {
@@ -56,6 +56,7 @@ final class CustomModalViewController: UIViewController {
         button.setTitle("Отправить заявку", for: .normal)
         button.titleLabel?.font = .sfProDisplayMedium(size: 16)
         button.backgroundColor = CommonColor.lightBlack
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         button.setTitleColor(CommonColor.white, for: .normal)
         button.layer.cornerRadius = 30
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -152,8 +153,11 @@ final class CustomModalViewController: UIViewController {
         containerViewBottomConstraint?.isActive = true
     }
 
+    @objc private func buttonTapped() {
+        !isSelect ? AlertManager.showWrongAlert(on: self) : AlertManager.showCorrectAlert(on: self)
+    }
 
-    @objc func handlePanGesture(gesture: UIPanGestureRecognizer) {
+    @objc private func handlePanGesture(gesture: UIPanGestureRecognizer) {
 
         let translation = gesture.translation(in: view)
         let isDraggingDown = translation.y > 0
@@ -219,7 +223,6 @@ extension CustomModalViewController: UICollectionViewDataSource {
         collectionView == categoriesCollectionView ? 2 : 1
     }
 
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         categories.count
     }
@@ -242,12 +245,14 @@ extension CustomModalViewController: UICollectionViewDelegate {
 
         collectionView.moveItem(at: indexPath, to: IndexPath(item: 0, section: 0))
         collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+        isSelect = true
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         
         if collectionView.cellForItem(at: indexPath)?.isSelected ?? false {
             collectionView.deselectItem(at: indexPath, animated: true)
+            isSelect = false
 
             return false
         }
