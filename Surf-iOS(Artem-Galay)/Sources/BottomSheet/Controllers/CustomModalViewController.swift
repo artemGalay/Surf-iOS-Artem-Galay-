@@ -9,25 +9,21 @@ import UIKit
 
 final class CustomModalViewController: UIViewController {
 
-    #warning("Проблема заключается в том, что в первой коллекции при тапе на ячейку, если тап попадает на вторую секцию(их там 2, вторая секция для того, чтобы работал бесконечный скрол вправо и влево) ячейка перемещается, но не выделяется и в логах очень много строк по поводу обновления коллекции")
+#warning("Проблема заключается в том, что в первой коллекции при тапе на ячейку, если тап попадает на первую секцию(их там 2, вторая секция для того, чтобы работал бесконечный скрол вправо и влево), при скролле после тапа пропадает выделение ячейки, если тап попадает на вторую секцию при скролле всё норм и выделение не пропадает")
 
     private var isSelect = false
     private var newElement = ""
     private var categories = Categories.names
 
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Стажировка в Surf"
-        label.textColor = CommonColor.lightBlack
-        label.font = .sfProDisplayBold(size: 24)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private var containerViewHeightConstraint: NSLayoutConstraint?
+    private var containerViewBottomConstraint: NSLayoutConstraint?
+
+    private var currentContainerHeight: CGFloat = UIScreen.main.bounds.height * 0.5
 
     private lazy var categoriesCollectionView: UICollectionView = {
-
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: -10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
@@ -41,6 +37,7 @@ final class CustomModalViewController: UIViewController {
     private lazy var categoriesCollectionView2: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: -10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
@@ -63,12 +60,24 @@ final class CustomModalViewController: UIViewController {
         return button
     }()
 
+    private let defaultHeight: CGFloat = 330
+    private let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 50
+
     private let descriptionLabel = DescriptionLabel(text: "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты.",
                                                     numberOfLines: 3)
     private let joinUsLabel = DescriptionLabel(text: "Хочешь к нам?",
                                                numberOfLines: 1)
-    private let description2Label = DescriptionLabel(text: "Получай стипендию, выстраивай удобный график, работай на современном железе.",
+    let description2Label = DescriptionLabel(text: "Получай стипендию, выстраивай удобный график, работай на современном железе.",
                                                      numberOfLines: 2)
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Стажировка в Surf"
+        label.textColor = CommonColor.lightBlack
+        label.font = .sfProDisplayBold(size: 24)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     private let containerView: UIView = {
         let view = UIView()
@@ -79,16 +88,9 @@ final class CustomModalViewController: UIViewController {
         return view
     }()
 
-    let defaultHeight: CGFloat = 330
-    let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 50
-    var currentContainerHeight: CGFloat = UIScreen.main.bounds.height * 0.5
-
-    var containerViewHeightConstraint: NSLayoutConstraint?
-    var containerViewBottomConstraint: NSLayoutConstraint?
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        setupViews()
         setupConstraints()
         setupPanGesture()
     }
@@ -98,7 +100,7 @@ final class CustomModalViewController: UIViewController {
         animatePresentContainer()
     }
 
-    func setupView() {
+    func setupViews() {
         view.backgroundColor = .clear
         view.addSubview(containerView)
         containerView.addSubview(titleLabel)
@@ -134,8 +136,7 @@ final class CustomModalViewController: UIViewController {
             categoriesCollectionView2.topAnchor.constraint(equalTo: description2Label.bottomAnchor, constant: 12),
             categoriesCollectionView2.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             categoriesCollectionView2.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            categoriesCollectionView2.heightAnchor.constraint(equalToConstant: 110),
-
+            categoriesCollectionView2.heightAnchor.constraint(equalToConstant: 100),
 
             joinUsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             joinUsLabel.centerYAnchor.constraint(equalTo: sendRequestButton.centerYAnchor),
@@ -229,7 +230,6 @@ extension CustomModalViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionViewCell.identifier, for: indexPath) as? CategoriesCollectionViewCell else { return UICollectionViewCell() }
-        cell.layer.cornerRadius = 12
         cell.categoriesLabel.text = categories[indexPath.row]
         return cell
     }
@@ -238,25 +238,43 @@ extension CustomModalViewController: UICollectionViewDataSource {
 extension CustomModalViewController: UICollectionViewDelegate {
 
 #warning("Перемещение ячейки по тапу на первое место")
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        newElement = categories[indexPath.item]
-        categories.remove(at: indexPath.item)
-        categories.insert(newElement, at: 0)
-
-        collectionView.moveItem(at: indexPath, to: IndexPath(item: 0, section: 0))
-        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
-        isSelect = true
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//
+//            newElement = categories[indexPath.item]
+//            categories.remove(at: indexPath.item)
+//            categories.insert(newElement, at: 0)
+//
+//            switch indexPath.section {
+//            case 0:
+//                collectionView.moveItem(at: indexPath, to: IndexPath(item: 0, section: indexPath.section))
+//                collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+//            case 1:
+//                collectionView.moveItem(at: indexPath, to: IndexPath(item: 0, section: indexPath.section))
+//                collectionView.scrollToItem(at: IndexPath(item: 0, section: 1), at: .left, animated: true)
+//            default: break
+//            }
+//
+//            isSelect = true
+//    }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        
-        if collectionView.cellForItem(at: indexPath)?.isSelected ?? false {
+        let item = collectionView.cellForItem(at: indexPath)
+        if ((item?.isSelected = true) != nil) {
             collectionView.deselectItem(at: indexPath, animated: true)
-            isSelect = false
-
-            return false
+        } else {
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+            DispatchQueue.main.async {
+                collectionView.moveItem(at: indexPath, to: IndexPath(item: 0, section: indexPath.section))
+            }
+            return true
         }
-        return true
+        return false
+//        if collectionView.cellForItem(at: indexPath)?.isSelected == true {
+//            collectionView.deselectItem(at: indexPath, animated: true)
+//            isSelect = false
+//            return false
+//        }
+//        return true
     }
 
 #warning("Этот метод отвечает за бесконечный скролл вправо и влево, он работает только если есть 2 секции")
@@ -273,12 +291,12 @@ extension CustomModalViewController: UICollectionViewDelegate {
     }
 }
 
-extension CustomModalViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let nameFont = UIFont.sfProDisplayMedium(size: 14)
-        let nameAttributes = [NSAttributedString.Key.font : nameFont as Any]
-        let nameWidth = categories[indexPath.item].size(withAttributes: nameAttributes).width + 50
-        return CGSize(width: nameWidth, height: 44)
-    }
-}
+//extension CustomModalViewController: UICollectionViewDelegateFlowLayout {
+//    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//    //        let nameFont = UIFont.sfProDisplayMedium(size: 14)
+//    //        let nameAttributes = [NSAttributedString.Key.font : nameFont as Any]
+//    //        let nameWidth = categories[indexPath.item].size(withAttributes: nameAttributes).width + 50
+//    //        return CGSize(width: nameWidth, height: 44)
+//    //    }
+//    //}
+//}

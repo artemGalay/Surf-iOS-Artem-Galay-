@@ -20,7 +20,7 @@ final class ViewController: UIViewController {
     }
 
     private func presentModalController() {
-        let vc = CustomModalViewController()
+        let vc = ModalViewController()
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: false)
     }

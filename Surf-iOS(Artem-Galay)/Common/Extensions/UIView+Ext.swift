@@ -20,4 +20,12 @@ extension UIView {
         self.addSubview(imageViewBackground)
         self.sendSubviewToBack(imageViewBackground)
     }
+
+    func addSubviews(_ subviews: [UIView]) {
+        subviews.forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(view)
+        }
+    }
 }
+
