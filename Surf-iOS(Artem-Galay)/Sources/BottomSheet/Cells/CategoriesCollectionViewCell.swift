@@ -9,13 +9,16 @@ import UIKit
 
 final class CategoriesCollectionViewCell: UICollectionViewCell {
 
+
+
     override var isSelected: Bool {
         didSet {
-            backgroundColor = self.isSelected ? CommonColor.lightBlack : CommonColor.lightGray
-            categoriesLabel.textColor =  self.isSelected ? CommonColor.lightGray : CommonColor.lightBlack
+            
+            backgroundColor = isSelected ? CommonColor.lightBlack : CommonColor.lightGray
+            categoriesLabel.textColor =  isSelected ? CommonColor.lightGray : CommonColor.lightBlack
         }
     }
-
+    
     //MARK: - Property
 
     static let identifier = "CollectionViewCell"
@@ -36,6 +39,7 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = CommonColor.lightGray
+        layer.cornerRadius = 12
         setupHierarchy()
         setupLayout()
     }
