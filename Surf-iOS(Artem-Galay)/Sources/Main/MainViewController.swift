@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Surf-iOS(Artem-Galay)
 //
 //  Created by Артем Галай on 3.02.23.
@@ -7,8 +7,9 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class MainViewController: UIViewController {
 
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addBackground()
@@ -19,8 +20,9 @@ final class ViewController: UIViewController {
         presentModalController()
     }
 
+    // MARK: - Private methods
     private func presentModalController() {
-        let vc = ModalViewController()
+        let vc = BottomSheetViewController()
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: false)
     }

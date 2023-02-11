@@ -1,5 +1,5 @@
 //
-//  CustomModalView.swift
+//  BottomSheet.swift
 //  Surf-iOS(Artem-Galay)
 //
 //  Created by Артем Галай on 10.02.23.
@@ -7,35 +7,42 @@
 
 import UIKit
 
-class CustomModalView: UIView {
+final class BottomSheetView: UIView {
+
+    // MARK: - Properties
 
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
 
-    lazy var categoriesCollectionView: UICollectionView = {
+    private let defaultHeight: CGFloat = 330
+    private let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 50
+
+    // MARK: - UIElements
+
+    let carouselCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: -10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
-//        collectionView.dataSource = self
-//        collectionView.delegate = self
+        collectionView.backgroundColor = CommonColor.white
+        collectionView.allowsMultipleSelection = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
 
-    lazy var categoriesCollectionView2: UICollectionView = {
+    let doubleCarouselCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: -10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
+        collectionView.backgroundColor = CommonColor.white
         collectionView.showsHorizontalScrollIndicator = false
-//        collectionView.dataSource = self
-//        collectionView.delegate = self
+        collectionView.allowsMultipleSelection = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -45,22 +52,19 @@ class CustomModalView: UIView {
         button.setTitle("Отправить заявку", for: .normal)
         button.titleLabel?.font = .sfProDisplayMedium(size: 16)
         button.backgroundColor = CommonColor.lightBlack
-//        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         button.setTitleColor(CommonColor.white, for: .normal)
         button.layer.cornerRadius = 30
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
-    private let defaultHeight: CGFloat = 330
-    private let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 50
+    let awardLabel = DefaultLabel(text: "Получай стипендию, выстраивай удобный график, работай на современном железе.",
+                                             numberOfLines: 2)
 
-    let descriptionLabel = DescriptionLabel(text: "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты.",
+    private let infoLabel = DefaultLabel(text: "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты.",
                                                     numberOfLines: 3)
-    private let joinUsLabel = DescriptionLabel(text: "Хочешь к нам?",
+    private let wantToJoinUsLabel = DefaultLabel(text: "Хочешь к нам?",
                                                numberOfLines: 1)
-    let description2Label = DescriptionLabel(text: "Получай стипендию, выстраивай удобный график, работай на современном железе.",
-                                                     numberOfLines: 2)
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -80,6 +84,7 @@ class CustomModalView: UIView {
         return view
     }()
 
+    // MARK: - Initialize
     init() {
         super.init(frame: .zero)
         commonInit()
@@ -88,7 +93,8 @@ class CustomModalView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
+    
+    // MARK: - Configuration
     private func commonInit() {
         backgroundColor = .clear
         setupHierarchy()
@@ -99,12 +105,12 @@ class CustomModalView: UIView {
         addSubview(containerView)
         containerView.addSubviews([
             titleLabel,
-            descriptionLabel,
-            joinUsLabel,
+            infoLabel,
+            wantToJoinUsLabel,
             sendRequestButton,
-            categoriesCollectionView,
-            description2Label,
-            categoriesCollectionView2
+            carouselCollectionView,
+            awardLabel,
+            doubleCarouselCollectionView
         ])
     }
 
@@ -116,26 +122,26 @@ class CustomModalView: UIView {
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 24),
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
 
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+            infoLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            infoLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
 
-            categoriesCollectionView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
-            categoriesCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            categoriesCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            categoriesCollectionView.heightAnchor.constraint(equalToConstant: 50),
+            carouselCollectionView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 12),
+            carouselCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            carouselCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            carouselCollectionView.heightAnchor.constraint(equalToConstant: 50),
 
-            description2Label.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 24),
-            description2Label.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            description2Label.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            awardLabel.topAnchor.constraint(equalTo: carouselCollectionView.bottomAnchor, constant: 24),
+            awardLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            awardLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
 
-            categoriesCollectionView2.topAnchor.constraint(equalTo: description2Label.bottomAnchor, constant: 12),
-            categoriesCollectionView2.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            categoriesCollectionView2.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            categoriesCollectionView2.heightAnchor.constraint(equalToConstant: 100),
+            doubleCarouselCollectionView.topAnchor.constraint(equalTo: awardLabel.bottomAnchor, constant: 12),
+            doubleCarouselCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            doubleCarouselCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            doubleCarouselCollectionView.heightAnchor.constraint(equalToConstant: 100),
 
-            joinUsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            joinUsLabel.centerYAnchor.constraint(equalTo: sendRequestButton.centerYAnchor),
+            wantToJoinUsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            wantToJoinUsLabel.centerYAnchor.constraint(equalTo: sendRequestButton.centerYAnchor),
 
             sendRequestButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             sendRequestButton.heightAnchor.constraint(equalToConstant: 60),
@@ -149,6 +155,4 @@ class CustomModalView: UIView {
         containerViewHeightConstraint?.isActive = true
         containerViewBottomConstraint?.isActive = true
     }
-        
-    }
-
+}

@@ -1,5 +1,5 @@
 //
-//  DescriptionLabel.swift
+//  DefaultLabel.swift
 //  Surf-iOS(Artem-Galay)
 //
 //  Created by Артем Галай on 6.02.23.
@@ -7,13 +7,7 @@
 
 import UIKit
 
-//private extension Appearance {
-//    var desctiptionFont: UIFont { .sfProDisplayRegular(size: 14) }
-//}
-
-final class DescriptionLabel: UILabel {
-
-//    private let appearance = Appearance()
+final class DefaultLabel: UILabel {
 
     init(text: String, numberOfLines: Int) {
         super.init(frame: .zero)
