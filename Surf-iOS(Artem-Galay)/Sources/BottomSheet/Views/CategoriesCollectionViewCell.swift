@@ -9,11 +9,8 @@ import UIKit
 
 final class CategoriesCollectionViewCell: UICollectionViewCell {
 
-
-
     override var isSelected: Bool {
         didSet {
-            
             backgroundColor = isSelected ? CommonColor.lightBlack : CommonColor.lightGray
             categoriesLabel.textColor =  isSelected ? CommonColor.lightGray : CommonColor.lightBlack
         }
@@ -23,7 +20,7 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "CollectionViewCell"
 
-    //MARK: - Outlets
+    // MARK: - UIElements
 
     let categoriesLabel: UILabel = {
         let label = UILabel()
