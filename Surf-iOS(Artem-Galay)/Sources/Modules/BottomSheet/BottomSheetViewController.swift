@@ -8,41 +8,41 @@
 import UIKit
 
 final class BottomSheetViewController: UIViewController {
-
+    
     // MARK: - Properties
-
+    
     private let presenter = BottomSheetPresenter()
-
+    
     private var isSelect = false
     private var previousIndex: IndexPath?
     private var currentContainerHeight = Constants.currentContainerHeight
     private let defaultHeight = Constants.defaultHeight
     private let maximumContainerHeight = Constants.maximumContainerHeight
-
+    
     // MARK: - View
-
+    
     private let customView = BottomSheetView()
-
+    
     // MARK: - Life Cycle
-
+    
     override func loadView() {
         view = customView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConfiguration()
         setupPanGesture()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         animatePresentContainer()
-
+        
         // Set the initial element for carouselCollectionView
         let indexPath = IndexPath(item: presenter.getNumberOfItemsInfiniteCarousel() / 2, section: 0)
         customView.carouselCollectionView.scrollToItem(at: indexPath, at: .left, animated: false)
     }
-
+    
     // MARK: - Configuration
     private func setupConfiguration() {
         customView.carouselCollectionView.dataSource = self
@@ -51,18 +51,18 @@ final class BottomSheetViewController: UIViewController {
         customView.doubleCarouselCollectionView.delegate = self
         customView.sendRequestButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
-
+    
     @objc private func buttonTapped() {
         !isSelect ? AlertManager.showWrongAlert(on: self) : AlertManager.showCorrectAlert(on: self)
     }
-
+    
     // MARK: - BottomSheet Configuration
     @objc private func handlePanGesture(gesture: UIPanGestureRecognizer) {
-
+        
         let translation = gesture.translation(in: view)
         let isDraggingDown = translation.y > 0
         let newHeight = currentContainerHeight - translation.y
-
+        
         switch gesture.state {
         case .changed:
             if newHeight > maximumContainerHeight {
@@ -86,31 +86,31 @@ final class BottomSheetViewController: UIViewController {
             break
         }
     }
-
+    
     private func setupPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(gesture:)))
         panGesture.delaysTouchesBegan = false
         panGesture.delaysTouchesEnded = false
         view.addGestureRecognizer(panGesture)
     }
-
+    
     private func animateContainerHeight(_ height: CGFloat) {
         UIView.animate(withDuration: 0.4) {
             self.customView.containerViewHeightConstraint?.constant = height
             self.customView.layoutIfNeeded()
         }
         currentContainerHeight = height
-
+        
         self.customView.awardLabel.isHidden = true
         self.customView.doubleCarouselCollectionView.isHidden = true
     }
-
+    
     private func animatePresentContainer() {
         UIView.animate(withDuration: 0.3) {
             self.customView.containerViewBottomConstraint?.constant = 0
             self.customView.layoutIfNeeded()
         }
-
+        
         customView.awardLabel.isHidden = true
         customView.doubleCarouselCollectionView.isHidden = true
     }
@@ -118,16 +118,16 @@ final class BottomSheetViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 extension BottomSheetViewController: UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         collectionView == customView.carouselCollectionView ? presenter.getNumberOfItemsInfiniteCarousel() : presenter.getNumberOfItems()
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: CategoriesCollectionViewCell.identifier,
             for: indexPath) as? CategoriesCollectionViewCell else { return UICollectionViewCell() }
-
+        
         cell.categoriesLabel.text = presenter.getCategoriesText(for: indexPath)
         return cell
     }
@@ -149,7 +149,7 @@ extension BottomSheetViewController: UICollectionViewDelegate {
                     }
                 }
             }
-
+            
             // Select all new elements
             for item in 0...presenter.getNumberOfItemsInfiniteCarousel() {
                 if (item % presenter.getNumberOfItems()) == (indexPath.item % presenter.getNumberOfItems()) {
@@ -161,12 +161,12 @@ extension BottomSheetViewController: UICollectionViewDelegate {
             previousIndex = indexPath
             collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
         }
-
+        
         if collectionView == customView.doubleCarouselCollectionView {
             isSelect = true
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         // Deselect item when scroll item is select
         if collectionView == customView.carouselCollectionView {
@@ -180,7 +180,7 @@ extension BottomSheetViewController: UICollectionViewDelegate {
                 }
             }
         }
-
+        
         if collectionView == customView.doubleCarouselCollectionView {
             isSelect = false
         }

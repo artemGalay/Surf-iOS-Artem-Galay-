@@ -14,18 +14,18 @@ protocol BottomSheetPresenterProtocol: AnyObject {
 }
 
 final class BottomSheetPresenter: BottomSheetPresenterProtocol {
-
+    
     private var numberOfItems = 1000
     private var categories = Categories.names
-
+    
     func getNumberOfItemsInfiniteCarousel() -> Int {
         numberOfItems
     }
-
+    
     func getNumberOfItems() -> Int {
         categories.count
     }
-
+    
     func getCategoriesText(for indexPath: IndexPath) -> String {
         categories[indexPath.row % categories.count]
     }
