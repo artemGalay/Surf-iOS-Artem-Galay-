@@ -37,7 +37,8 @@ final class BottomSheetViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         animatePresentContainer()
-        // set the initial element for carouselCollectionView
+
+        // Set the initial element for carouselCollectionView
         let indexPath = IndexPath(item: presenter.getNumberOfItemsInfiniteCarousel() / 2, section: 0)
         customView.carouselCollectionView.scrollToItem(at: indexPath, at: .left, animated: false)
     }
@@ -65,9 +66,7 @@ final class BottomSheetViewController: UIViewController {
         switch gesture.state {
         case .changed:
             if newHeight > maximumContainerHeight {
-                customView.containerViewHeightConstraint?.constant = maximumContainerHeight
-                view.layoutIfNeeded()
-
+                animateContainerHeight(maximumContainerHeight)
             }
         case .ended:
             if newHeight < maximumContainerHeight && isDraggingDown {
@@ -88,30 +87,30 @@ final class BottomSheetViewController: UIViewController {
         }
     }
 
-    func setupPanGesture() {
+    private func setupPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(gesture:)))
         panGesture.delaysTouchesBegan = false
         panGesture.delaysTouchesEnded = false
         view.addGestureRecognizer(panGesture)
     }
 
-    func animateContainerHeight(_ height: CGFloat) {
+    private func animateContainerHeight(_ height: CGFloat) {
         UIView.animate(withDuration: 0.4) {
             self.customView.containerViewHeightConstraint?.constant = height
             self.customView.layoutIfNeeded()
         }
-
         currentContainerHeight = height
 
         self.customView.awardLabel.isHidden = true
         self.customView.doubleCarouselCollectionView.isHidden = true
     }
 
-    func animatePresentContainer() {
+    private func animatePresentContainer() {
         UIView.animate(withDuration: 0.3) {
             self.customView.containerViewBottomConstraint?.constant = 0
             self.customView.layoutIfNeeded()
         }
+
         customView.awardLabel.isHidden = true
         customView.doubleCarouselCollectionView.isHidden = true
     }
@@ -138,6 +137,7 @@ extension BottomSheetViewController: UICollectionViewDataSource {
 extension BottomSheetViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         // Deselect all previous items, if any
         if collectionView == customView.carouselCollectionView {
             if let previousIndex = previousIndex {

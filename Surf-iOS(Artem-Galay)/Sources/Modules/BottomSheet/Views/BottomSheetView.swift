@@ -63,7 +63,6 @@ final class BottomSheetView: UIView {
                                   font: .sfProDisplayMedium(size: 14),
                                   textColor: Color.gray)
 
-
     private let titleLabel = DefaultLabel(text: Strings.BottomSheet.titleLabel,
                                           numberOfLines: 1,
                                           font: .sfProDisplayBold(size: 24),
@@ -88,7 +87,7 @@ final class BottomSheetView: UIView {
         return view
     }()
 
-    // MARK: - Initialize
+    // MARK: - Initialization
     init() {
         super.init(frame: .zero)
         commonInit()

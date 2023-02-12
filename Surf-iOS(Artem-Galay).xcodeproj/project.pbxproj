@@ -79,9 +79,8 @@
 		D9335B0D29969D320035746F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D98A2853299046C0006D6760 /* CategoriesCollectionViewCell.swift */,
-				D98A2855299046C4006D6760 /* Cells */,
 				D9335B0E29969D620035746F /* BottomSheetView.swift */,
+				D98A2855299046C4006D6760 /* Cells */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -93,6 +92,15 @@
 				D950F7752998F79E00B72B4F /* Localizable.strings */,
 			);
 			path = Localizable;
+			sourceTree = "<group>";
+		};
+		D950F7772998FB9000B72B4F /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				D9BA6069298D07F1001041F3 /* Main */,
+				D98A284A298D236B006D6760 /* BottomSheet */,
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		D97E2FC22996FA97003BAC4A /* Sf-Pro-Display */ = {
@@ -127,6 +135,7 @@
 		D98A2855299046C4006D6760 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				D98A2853299046C0006D6760 /* CategoriesCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -166,9 +175,6 @@
 		D9BA603B298CEAD5001041F3 /* Surf-iOS(Artem-Galay) */ = {
 			isa = PBXGroup;
 			children = (
-				D9BA6050298CF185001041F3 /* App */,
-				D9BA6054298CF276001041F3 /* Common */,
-				D9335B0929943E0A0035746F /* Managers */,
 				D9BA6053298CF243001041F3 /* Sources */,
 				D9BA6052298CF22F001041F3 /* Resources */,
 			);
@@ -179,8 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				D9BA603C298CEAD5001041F3 /* AppDelegate.swift */,
-				D9BA6047298CEAD6001041F3 /* LaunchScreen.storyboard */,
-				D9BA6051298CF18A001041F3 /* Settings */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -196,9 +200,11 @@
 		D9BA6052298CF22F001041F3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D9BA6051298CF18A001041F3 /* Settings */,
 				D950F76E2998F75700B72B4F /* Localizable */,
 				D9BA605E298CF768001041F3 /* Fonts */,
 				D9BA6045298CEAD6001041F3 /* Assets.xcassets */,
+				D9BA6047298CEAD6001041F3 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -206,8 +212,10 @@
 		D9BA6053298CF243001041F3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D9BA6069298D07F1001041F3 /* Main */,
-				D98A284A298D236B006D6760 /* BottomSheet */,
+				D9BA6050298CF185001041F3 /* App */,
+				D9BA6054298CF276001041F3 /* Common */,
+				D9335B0929943E0A0035746F /* Managers */,
+				D950F7772998FB9000B72B4F /* Modules */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -498,7 +506,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76N9URDUCT;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/App/Settings/Info.plist";
+				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/Resources/Settings/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -527,7 +535,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76N9URDUCT;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/App/Settings/Info.plist";
+				INFOPLIST_FILE = "Surf-iOS(Artem-Galay)/Resources/Settings/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
