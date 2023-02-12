@@ -1,0 +1,11 @@
+"bottomSheet_title" = "Internship at Surf";
+"bottomSheet_award_label" = "Get a scholarship, build a convenient schedule, work on modern hardware.";
+"bottomSheet_info_label" = "Work on real tasks under the guidance of an experienced mentor and get the opportunity to become part of a dream team.";
+"bottomSheet_want_to_join_us_label" = "Do you want to join us?";
+"bottomSheet_send_request_button" = "Submit an application";
+"bottomSheet_title_correct_alert" = "Congratulations!";
+"bottomSheet_message_correct_alert" = "Your application has been successfully sent!";
+"bottomSheet_title_wrong_alert" = "Error!";
+"bottomSheet_message_wrong_alert" = "You have not chosen a programming language!";
+"bottomSheet_action_alert" = "close";
+}

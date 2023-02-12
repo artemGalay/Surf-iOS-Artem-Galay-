@@ -11,8 +11,8 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            backgroundColor = isSelected ? CommonColor.lightBlack : CommonColor.lightGray
-            categoriesLabel.textColor =  isSelected ? CommonColor.lightGray : CommonColor.lightBlack
+            backgroundColor = isSelected ? Color.lightBlack : Color.lightGray
+            categoriesLabel.textColor =  isSelected ? Color.lightGray : Color.lightBlack
         }
     }
     
@@ -25,7 +25,7 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
     let categoriesLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.sfProDisplayMedium(size: 14)
-        label.textColor = CommonColor.lightBlack
+        label.textColor = Color.lightBlack
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -35,7 +35,7 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = CommonColor.lightGray
+        backgroundColor = Color.lightGray
         layer.cornerRadius = 12
         setupHierarchy()
         setupLayout()

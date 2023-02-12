@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CommonColor {
+enum Color {
     // #313131
     static let lightBlack = UIColor(hex: "#313131")
     // #FFFFFF

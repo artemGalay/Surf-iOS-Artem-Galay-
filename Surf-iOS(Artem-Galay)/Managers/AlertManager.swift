@@ -12,7 +12,7 @@ final class AlertManager {
 private static func showBasicAlert(on vc: UIViewController, title: String, message: String?) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Закрыть", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: Strings.BottomSheet.actionAlert, style: .default, handler: nil))
             vc.present(alert, animated: true)
         }
     }
@@ -21,10 +21,10 @@ private static func showBasicAlert(on vc: UIViewController, title: String, messa
 extension AlertManager {
 
     static func showCorrectAlert(on vc: UIViewController) {
-        self.showBasicAlert(on: vc, title: "Поздравляем!", message: "Ваша заявка успешно отправлена!")
+        self.showBasicAlert(on: vc, title: Strings.BottomSheet.titleCorrectAlert, message: Strings.BottomSheet.messageCorrectAlert)
     }
 
     static func showWrongAlert(on vc: UIViewController) {
-        self.showBasicAlert(on: vc, title: "Ошибка!", message: "Вы не выбрали язык программирования!")
+        self.showBasicAlert(on: vc, title: Strings.BottomSheet.titleWrongAlert, message: Strings.BottomSheet.messageWrongAlert)
     }
 }
