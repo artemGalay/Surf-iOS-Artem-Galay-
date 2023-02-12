@@ -8,11 +8,11 @@
 import UIKit
 
 final class CategoriesCollectionViewCell: UICollectionViewCell {
-
+    
     //MARK: - Properties
     
     static let identifier = "CollectionViewCell"
-
+    
     override var isSelected: Bool {
         didSet {
             backgroundColor = isSelected ? Color.lightBlack : Color.lightGray
