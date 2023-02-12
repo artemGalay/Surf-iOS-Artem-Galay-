@@ -14,9 +14,6 @@ final class BottomSheetView: UIView {
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
 
-    private let defaultHeight: CGFloat = 330
-    private let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 50
-
     // MARK: - UIElements
 
     let carouselCollectionView: UICollectionView = {
@@ -53,7 +50,7 @@ final class BottomSheetView: UIView {
         button.titleLabel?.font = .sfProDisplayMedium(size: 16)
         button.backgroundColor = Color.lightBlack
         button.setTitleColor(Color.white, for: .normal)
-        button.layer.cornerRadius = 30
+        button.layer.cornerRadius = Metrics.buttonCornerRadius
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -81,7 +78,7 @@ final class BottomSheetView: UIView {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 25
+        view.layer.cornerRadius = Metrics.containerViewCornerRadius
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -119,43 +116,77 @@ final class BottomSheetView: UIView {
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
+
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 24),
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor,
+                                            constant: Metrics.titleLabelTop),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor,
+                                                constant: Metrics.titleLabelLeading),
 
-            infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            infoLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            infoLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
+                                           constant: Metrics.infoLabelTop),
+            infoLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor,
+                                               constant: Metrics.infoLabelLeadingTrailing),
+            infoLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor,
+                                                constant: -Metrics.infoLabelLeadingTrailing),
 
-            carouselCollectionView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 12),
+            carouselCollectionView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor,
+                                                        constant: Metrics.carouselsTop),
             carouselCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             carouselCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            carouselCollectionView.heightAnchor.constraint(equalToConstant: 50),
+            carouselCollectionView.heightAnchor.constraint(equalToConstant: Metrics.carouselHeight),
 
-            awardLabel.topAnchor.constraint(equalTo: carouselCollectionView.bottomAnchor, constant: 24),
-            awardLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            awardLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            awardLabel.topAnchor.constraint(equalTo: carouselCollectionView.bottomAnchor,
+                                            constant: Metrics.awardLabelTop),
+            awardLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor,
+                                                constant: Metrics.awardLabelLeadingTrailing),
+            awardLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor,
+                                                 constant: -Metrics.awardLabelLeadingTrailing),
 
-            doubleCarouselCollectionView.topAnchor.constraint(equalTo: awardLabel.bottomAnchor, constant: 12),
+            doubleCarouselCollectionView.topAnchor.constraint(equalTo: awardLabel.bottomAnchor,
+                                                              constant: Metrics.carouselsTop),
             doubleCarouselCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             doubleCarouselCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            doubleCarouselCollectionView.heightAnchor.constraint(equalToConstant: 100),
+            doubleCarouselCollectionView.heightAnchor.constraint(equalToConstant: Metrics.doubleCarouselHeight),
 
-            wantToJoinUsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            wantToJoinUsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor,
+                                                       constant: Metrics.wantToJoinUsLabelTop),
             wantToJoinUsLabel.centerYAnchor.constraint(equalTo: sendRequestButton.centerYAnchor),
 
-            sendRequestButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            sendRequestButton.heightAnchor.constraint(equalToConstant: 60),
-            sendRequestButton.widthAnchor.constraint(equalToConstant: 219),
-            sendRequestButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -58)
+            sendRequestButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor,
+                                                        constant: Metrics.sendRequestButtonTrailing),
+            sendRequestButton.heightAnchor.constraint(equalToConstant: Metrics.sendRequestButtonHeight),
+            sendRequestButton.widthAnchor.constraint(equalToConstant: Metrics.sendRequestButtonWidth),
+            sendRequestButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,
+                                                      constant: Metrics.sendRequestButtonBottom)
         ])
 
-        containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: defaultHeight)
-        containerViewBottomConstraint = containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: defaultHeight)
-
+        containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: Constants.defaultHeight)
+        containerViewBottomConstraint = containerView.bottomAnchor.constraint(equalTo: bottomAnchor,
+                                                                              constant: Constants.defaultHeight)
+        
         containerViewHeightConstraint?.isActive = true
         containerViewBottomConstraint?.isActive = true
     }
+}
+
+enum Metrics {
+    static let buttonCornerRadius: CGFloat = 30
+    static let containerViewCornerRadius: CGFloat = 25
+    static let titleLabelTop: CGFloat = 24
+    static let titleLabelLeading: CGFloat = 20
+    static let infoLabelTop: CGFloat = 12
+    static let infoLabelLeadingTrailing: CGFloat = 20
+    static let carouselsTop: CGFloat = 12
+    static let carouselHeight: CGFloat = 50
+    static let awardLabelTop: CGFloat = 24
+    static let awardLabelLeadingTrailing: CGFloat = 20
+    static let doubleCarouselHeight: CGFloat = 100
+    static let wantToJoinUsLabelTop: CGFloat = 20
+    static let sendRequestButtonTrailing: CGFloat = -20
+    static let sendRequestButtonHeight: CGFloat = 60
+    static let sendRequestButtonWidth: CGFloat = 219
+    static let sendRequestButtonBottom: CGFloat = -58
 }

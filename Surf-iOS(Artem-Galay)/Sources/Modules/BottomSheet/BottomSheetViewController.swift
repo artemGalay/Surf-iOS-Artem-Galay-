@@ -15,9 +15,9 @@ final class BottomSheetViewController: UIViewController {
 
     private var isSelect = false
     private var previousIndex: IndexPath?
-    private var currentContainerHeight: CGFloat = UIScreen.main.bounds.height * 0.5
-    private let defaultHeight: CGFloat = 330
-    private let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 50
+    private var currentContainerHeight = Constants.currentContainerHeight
+    private let defaultHeight = Constants.defaultHeight
+    private let maximumContainerHeight = Constants.maximumContainerHeight
 
     // MARK: - View
 
@@ -185,4 +185,11 @@ extension BottomSheetViewController: UICollectionViewDelegate {
             isSelect = false
         }
     }
+}
+
+// MARK: - Constants
+enum Constants {
+    static let currentContainerHeight: CGFloat = UIScreen.main.bounds.height * 0.5
+    static let defaultHeight: CGFloat = 330
+    static let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 50
 }

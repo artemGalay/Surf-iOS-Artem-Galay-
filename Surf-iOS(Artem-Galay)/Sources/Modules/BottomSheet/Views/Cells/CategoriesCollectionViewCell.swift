@@ -8,17 +8,17 @@
 import UIKit
 
 final class CategoriesCollectionViewCell: UICollectionViewCell {
+
+    //MARK: - Properties
     
+    static let identifier = "CollectionViewCell"
+
     override var isSelected: Bool {
         didSet {
             backgroundColor = isSelected ? Color.lightBlack : Color.lightGray
             categoriesLabel.textColor =  isSelected ? Color.lightGray : Color.lightBlack
         }
     }
-    
-    //MARK: - Properties
-    
-    static let identifier = "CollectionViewCell"
     
     // MARK: - UIElements
     
@@ -48,7 +48,7 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
     
     private func configuration() {
         backgroundColor = Color.lightGray
-        layer.cornerRadius = 12
+        layer.cornerRadius = Metrics.cornerRadiusCell
     }
     
     private func setupHierarchy() {
@@ -58,10 +58,20 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
     private func setupLayout() {
         NSLayoutConstraint.activate([
             
-            categoriesLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            categoriesLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            categoriesLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24 ),
-            categoriesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
+            categoriesLabel.topAnchor.constraint(equalTo: topAnchor,
+                                                 constant: Metrics.categoriesLabelTopBottom),
+            categoriesLabel.leadingAnchor.constraint(equalTo: leadingAnchor,
+                                                     constant: Metrics.categoriesLabelLeadingTrailing),
+            categoriesLabel.trailingAnchor.constraint(equalTo: trailingAnchor,
+                                                      constant: -Metrics.categoriesLabelLeadingTrailing),
+            categoriesLabel.bottomAnchor.constraint(equalTo: bottomAnchor,
+                                                    constant: -Metrics.categoriesLabelTopBottom)
         ])
     }
+}
+
+extension Metrics {
+    static let cornerRadiusCell: CGFloat = 12
+    static let categoriesLabelTopBottom: CGFloat = 12
+    static let categoriesLabelLeadingTrailing: CGFloat = 24
 }
