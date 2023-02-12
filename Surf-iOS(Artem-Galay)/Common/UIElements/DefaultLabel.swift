@@ -9,10 +9,12 @@ import UIKit
 
 final class DefaultLabel: UILabel {
 
-    init(text: String, numberOfLines: Int) {
+    init(text: String, numberOfLines: Int, font: UIFont, textColor: UIColor) {
         super.init(frame: .zero)
         self.text = text
         self.numberOfLines = numberOfLines
+        self.font = font
+        self.textColor = textColor
         configureTitleLabel()
     }
 
@@ -21,8 +23,6 @@ final class DefaultLabel: UILabel {
     }
 
     private func configureTitleLabel() {
-        textColor = CommonColor.gray
-        font = .sfProDisplayRegular(size: 14)
         textAlignment = .left
         translatesAutoresizingMaskIntoConstraints = false
     }

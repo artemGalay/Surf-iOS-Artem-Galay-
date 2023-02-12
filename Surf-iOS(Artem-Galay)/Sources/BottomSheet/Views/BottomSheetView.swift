@@ -24,10 +24,10 @@ final class BottomSheetView: UIView {
         layout.scrollDirection = .horizontal
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = CommonColor.white
+        collectionView.backgroundColor = Color.white
         collectionView.allowsMultipleSelection = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -40,7 +40,7 @@ final class BottomSheetView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
-        collectionView.backgroundColor = CommonColor.white
+        collectionView.backgroundColor = Color.white
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.allowsMultipleSelection = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,31 +49,35 @@ final class BottomSheetView: UIView {
 
     lazy var sendRequestButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Отправить заявку", for: .normal)
+        button.setTitle(Strings.BottomSheet.sendRequestButton, for: .normal)
         button.titleLabel?.font = .sfProDisplayMedium(size: 16)
-        button.backgroundColor = CommonColor.lightBlack
-        button.setTitleColor(CommonColor.white, for: .normal)
+        button.backgroundColor = Color.lightBlack
+        button.setTitleColor(Color.white, for: .normal)
         button.layer.cornerRadius = 30
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
-    let awardLabel = DefaultLabel(text: "Получай стипендию, выстраивай удобный график, работай на современном железе.",
-                                             numberOfLines: 2)
+    let awardLabel = DefaultLabel(text: Strings.BottomSheet.awardLabel,
+                                  numberOfLines: 2,
+                                  font: .sfProDisplayMedium(size: 14),
+                                  textColor: Color.gray)
 
-    private let infoLabel = DefaultLabel(text: "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты.",
-                                                    numberOfLines: 3)
-    private let wantToJoinUsLabel = DefaultLabel(text: "Хочешь к нам?",
-                                               numberOfLines: 1)
 
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Стажировка в Surf"
-        label.textColor = CommonColor.lightBlack
-        label.font = .sfProDisplayBold(size: 24)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private let titleLabel = DefaultLabel(text: Strings.BottomSheet.titleLabel,
+                                          numberOfLines: 1,
+                                          font: .sfProDisplayBold(size: 24),
+                                          textColor: Color.lightBlack)
+
+    private let infoLabel = DefaultLabel(text: Strings.BottomSheet.infoLabel,
+                                         numberOfLines: 3,
+                                         font: .sfProDisplayMedium(size: 14),
+                                         textColor: Color.gray)
+
+    private let wantToJoinUsLabel = DefaultLabel(text: Strings.BottomSheet.wantToJoinUsLabel,
+                                                 numberOfLines: 1,
+                                                 font: .sfProDisplayMedium(size: 14),
+                                                 textColor: Color.gray)
 
     private let containerView: UIView = {
         let view = UIView()
@@ -93,7 +97,7 @@ final class BottomSheetView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     // MARK: - Configuration
     private func commonInit() {
         backgroundColor = .clear

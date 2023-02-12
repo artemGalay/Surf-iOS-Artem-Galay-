@@ -1,0 +1,11 @@
+"bottomSheet_title" = "Стажировка в Surf";
+"bottomSheet_award_label" = "Получай стипендию, выстраивай удобный график, работай на современном железе.";
+"bottomSheet_info_label" = "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты.";
+"bottomSheet_want_to_join_us_label" = "Хочешь к нам?";
+"bottomSheet_send_request_button" = "Отправить заявку";
+"bottomSheet_title_correct_alert" = "Поздравляем!";
+"bottomSheet_message_correct_alert" = "Ваша заявка успешно отправлена!";
+"bottomSheet_title_wrong_alert" = "Ошибка!";
+"bottomSheet_message_wrong_alert" = "Вы не выбрали язык программирования!";
+"bottomSheet_action_alert" = "Закрыть";
+}

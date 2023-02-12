@@ -67,14 +67,17 @@ final class BottomSheetViewController: UIViewController {
             if newHeight > maximumContainerHeight {
                 customView.containerViewHeightConstraint?.constant = maximumContainerHeight
                 view.layoutIfNeeded()
+
             }
         case .ended:
             if newHeight < maximumContainerHeight && isDraggingDown {
                 animateContainerHeight(defaultHeight)
             }
             else if newHeight > defaultHeight && !isDraggingDown {
-                animateContainerHeight(maximumContainerHeight)
-
+                UIView.animate(withDuration: 0.3, delay: 0.1) {
+                    self.customView.containerViewHeightConstraint?.constant = self.maximumContainerHeight
+                    self.customView.layoutIfNeeded()
+                }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.customView.awardLabel.isHidden = false
                     self.customView.doubleCarouselCollectionView.isHidden = false
@@ -135,7 +138,7 @@ extension BottomSheetViewController: UICollectionViewDataSource {
 extension BottomSheetViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // deselect all previous items, if any
+        // Deselect all previous items, if any
         if collectionView == customView.carouselCollectionView {
             if let previousIndex = previousIndex {
                 for item in 0...presenter.getNumberOfItemsInfiniteCarousel() {
@@ -147,7 +150,7 @@ extension BottomSheetViewController: UICollectionViewDelegate {
                 }
             }
 
-            // select all new elements
+            // Select all new elements
             for item in 0...presenter.getNumberOfItemsInfiniteCarousel() {
                 if (item % presenter.getNumberOfItems()) == (indexPath.item % presenter.getNumberOfItems()) {
                     let indexPath = IndexPath(item: item, section: 0)
@@ -158,18 +161,28 @@ extension BottomSheetViewController: UICollectionViewDelegate {
             previousIndex = indexPath
             collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
         }
+
+        if collectionView == customView.doubleCarouselCollectionView {
+            isSelect = true
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        // deselect item when scroll item is select
-        if let previousIndex = previousIndex {
-            for item in 0...presenter.getNumberOfItemsInfiniteCarousel() {
-                if (item % presenter.getNumberOfItems()) == (previousIndex.item % presenter.getNumberOfItems()) {
-                    let indexPath = IndexPath(item: item, section: 0)
-                    collectionView.deselectItem(at: indexPath, animated: true)
-                    isSelect = false
+        // Deselect item when scroll item is select
+        if collectionView == customView.carouselCollectionView {
+            if let previousIndex = previousIndex {
+                for item in 0...presenter.getNumberOfItemsInfiniteCarousel() {
+                    if (item % presenter.getNumberOfItems()) == (previousIndex.item % presenter.getNumberOfItems()) {
+                        let indexPath = IndexPath(item: item, section: 0)
+                        collectionView.deselectItem(at: indexPath, animated: true)
+                        isSelect = false
+                    }
                 }
             }
+        }
+
+        if collectionView == customView.doubleCarouselCollectionView {
+            isSelect = false
         }
     }
 }
