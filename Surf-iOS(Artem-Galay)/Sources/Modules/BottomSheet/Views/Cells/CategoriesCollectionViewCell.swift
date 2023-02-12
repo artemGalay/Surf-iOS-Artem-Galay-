@@ -8,7 +8,7 @@
 import UIKit
 
 final class CategoriesCollectionViewCell: UICollectionViewCell {
-
+    
     override var isSelected: Bool {
         didSet {
             backgroundColor = isSelected ? Color.lightBlack : Color.lightGray
@@ -16,12 +16,12 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    //MARK: - Property
-
+    //MARK: - Properties
+    
     static let identifier = "CollectionViewCell"
-
+    
     // MARK: - UIElements
-
+    
     let categoriesLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.sfProDisplayMedium(size: 14)
@@ -30,30 +30,34 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
-    //MARK: - Initializers
-
+    
+    //MARK: - Initialization
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Color.lightGray
-        layer.cornerRadius = 12
+        configuration()
         setupHierarchy()
         setupLayout()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    //MARK: - Private Methods
-
+    
+    //MARK: - Configuration
+    
+    private func configuration() {
+        backgroundColor = Color.lightGray
+        layer.cornerRadius = 12
+    }
+    
     private func setupHierarchy() {
         addSubview(categoriesLabel)
     }
-
+    
     private func setupLayout() {
         NSLayoutConstraint.activate([
-
+            
             categoriesLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             categoriesLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             categoriesLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24 ),

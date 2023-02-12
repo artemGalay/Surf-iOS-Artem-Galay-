@@ -22,8 +22,8 @@ final class MainViewController: UIViewController {
 
     // MARK: - Private methods
     private func presentModalController() {
-        let vc = BottomSheetViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false)
+        let viewController = BottomSheetViewController()
+        viewController.modalPresentationStyle = .overCurrentContext
+        self.present(viewController, animated: false)
     }
 }
